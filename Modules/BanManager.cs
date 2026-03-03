@@ -186,7 +186,7 @@ public static class BanManager
 
     public static bool IsWordBanned(PlayerControl player, string input)
     {
-        if (input == "" || !AmongUsClient.Instance.AmHost) return false;
+        if (input == "" || !AmongUsClient.Instance.AmHost || Utils.CheckAccessLevel(player.Data.FriendCode) > 0) return false;
 
         var bannedWords = File.ReadAllLines(BanWordPath);
 

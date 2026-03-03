@@ -115,6 +115,12 @@ internal static class SendChatPatch
             return false;
         }
 
+        if (text == "/s" || text == "/start")
+        {
+            GameStartManager.Instance.BeginGame();
+            return false;
+        }
+
         if (text == "/eg" || text == "/endgame")
         {
             __instance.freeChatField.textArea.Clear();

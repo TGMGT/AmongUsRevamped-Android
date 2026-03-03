@@ -180,8 +180,11 @@ class PlayerControlCompleteTaskPatch
             nameText.text = $"{__instance.Data.PlayerName}<color=green><size=90%>({playerTasksCompleted[__instance]}/{tasksPerPlayer[__instance]})</color>";
         }
     }
+    
     public static void CalculateTaskWin()
     {
+        if (!Utils.GamePastRoleSelection) return;
+
         Logger.Info($" Checking if {GameData.Instance.CompletedTasks} - {ignoredCompletedTasks} >= ({GameData.Instance.TotalTasks} - {ignoredTasks}) * 0.01 * {Options.TaskPercentNeededToWin.GetInt()}", "TaskPatch");
 
         if ((GameData.Instance.CompletedTasks - ignoredCompletedTasks) >= (GameData.Instance.TotalTasks - ignoredTasks)*0.01*Options.TaskPercentNeededToWin.GetInt())
