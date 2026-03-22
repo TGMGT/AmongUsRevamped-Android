@@ -17,8 +17,6 @@ internal static class AddVotePatch
 
         if (AmongUsClient.Instance.ClientId == srcClient)
         {
-            AmongUsClient.Instance.KickPlayer(target.Data.ClientId, false);
-
             Logger.Info($" Kicked {target.Data.PlayerName}, {target.Data.FriendCode}", "KickPatch");
         }
         return true;
@@ -48,6 +46,16 @@ internal static class BanMenuSetVisiblePatch
         __instance.KickButton.gameObject.SetActive(true);
         __instance.MenuButton.gameObject.SetActive(show);
         
+        return false;
+    }
+}
+
+[HarmonyPatch(typeof(InnerNetClient), nameof(InnerNetClient.CanBan))]
+internal class InnerNetClientCanBanPatch
+{
+    public static bool Prefix(InnerNetClient __instance, ref bool __result)
+    {
+        __result = __instance.AmHost;
         return false;
     }
 }

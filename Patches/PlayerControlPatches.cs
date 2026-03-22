@@ -16,7 +16,7 @@ class ReportDeadBodyPatch
     {
         if (!AmongUsClient.Instance.AmHost || __instance == null) return true;
 
-        if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.CanCallMeetings && target == null)
+        if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.CanCallMeetings && !Options.ChatBeforeFirstMeeting.GetBool() && target == null)
         {
             Logger.Info($" {__instance.Data.PlayerName} is calling a meeting too fast, attempt blocked", "ReportDeadBodyPatch");
             return false;
@@ -183,9 +183,9 @@ class PlayerControlCompleteTaskPatch
     
     public static void CalculateTaskWin()
     {
-        if (!Utils.GamePastRoleSelection) return;
+        if (!Utils.GamePastRoleSelection || Utils.isHideNSeek) return;
 
-        Logger.Info($" Checking if {GameData.Instance.CompletedTasks} - {ignoredCompletedTasks} >= ({GameData.Instance.TotalTasks} - {ignoredTasks}) * 0.01 * {Options.TaskPercentNeededToWin.GetInt()}", "TaskPatch");
+        //Logger.Info($" Checking if {GameData.Instance.CompletedTasks} - {ignoredCompletedTasks} >= ({GameData.Instance.TotalTasks} - {ignoredTasks}) * 0.01 * {Options.TaskPercentNeededToWin.GetInt()}", "TaskPatch");
 
         if ((GameData.Instance.CompletedTasks - ignoredCompletedTasks) >= (GameData.Instance.TotalTasks - ignoredTasks)*0.01*Options.TaskPercentNeededToWin.GetInt())
         {

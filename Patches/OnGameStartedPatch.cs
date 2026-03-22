@@ -77,7 +77,7 @@ class PlayerControlSetRolePatch
             var candidates = new List<PlayerControl>();
             foreach (var p in PlayerControl.AllPlayerControls)
             {
-                if (Main.GM.Value && p != PlayerControl.LocalPlayer) candidates.Add(p);
+                if (!Main.GM.Value || p != PlayerControl.LocalPlayer) candidates.Add(p);
             }
 
             seekersCount = Math.Min(seekersCount, candidates.Count);
@@ -97,7 +97,7 @@ class PlayerControlSetRolePatch
         if (Utils.isHideNSeek)
         {
             if (Seekers.Contains(__instance.PlayerId)) roleType = RoleTypes.Impostor;
-            else roleType = RoleTypes.Crewmate;
+            else roleType = RoleTypes.Engineer;
         }
 
         if (Options.Gamemode.GetValue() == 3 && !Utils.isHideNSeek)

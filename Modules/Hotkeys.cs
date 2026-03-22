@@ -12,6 +12,8 @@ internal class Hotkeys
     public static int IncrementMultiplier;
     public static void Postfix()
     {
+        if (AmongUsClient.Instance == null || PlayerControl.LocalPlayer == null) return;
+
         bool Shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         bool Ctrl = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
         bool Enter = Input.GetKeyDown(KeyCode.Return);

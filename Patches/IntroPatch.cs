@@ -16,11 +16,18 @@ internal static class CoShowIntroPatch
         if (!AmongUsClient.Instance.AmHost) return;
 
         NormalGameEndChecker.customRoles = CustomRoleManagement.PlayerToCustomRole();
-        CustomRoleManagement.SendRoleMessages(new Dictionary<string, string>
+
+        if (CustomRoleManagement.PlayerRoles.Count != 0 && !Utils.isHideNSeek)
         {
-            { "Jester", Translator.Get("jesterPriv")},
-            { "Mayor", Translator.Get("mayorPriv", Options.MayorExtraVoteCount.GetInt())},
-        });
+            _ = new LateTask(() =>
+            {
+                CustomRoleManagement.SendRoleMessages(new Dictionary<string, string>
+                {
+                    { "Jester", Translator.Get("jesterPriv")},
+                    { "Mayor", Translator.Get("mayorPriv", Options.MayorExtraVoteCount.GetInt())},
+                });
+            }, 1f, "BlockACKick");
+        }
         
         foreach (var p in PlayerControl.AllPlayerControls)
         {
@@ -32,7 +39,7 @@ internal static class CoShowIntroPatch
             PlayerControlCompleteTaskPatch.tasksPerPlayer[p] = 0;
         }
 
-        if (Options.DisableAnnoyingMeetingCalls.GetBool())
+        if (Options.DisableAnnoyingMeetingCalls.GetBool() && !Utils.isHideNSeek)
         {
             Utils.CanCallMeetings = false;
             _ = new LateTask(() =>
@@ -55,7 +62,7 @@ class BeginCrewmatePatch
             _ = new LateTask(() =>
             {  
                 PlayerControl.LocalPlayer.CmdReportDeadBody(null);
-                MeetingHud.Instance.RpcClose(); 
+                if (MeetingHud.Instance != null) MeetingHud.Instance.RpcClose(); 
 
             }, 7f, "SetChatVisible");  
         }
