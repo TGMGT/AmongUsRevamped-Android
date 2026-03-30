@@ -36,7 +36,6 @@ public static class FixedUpdate
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
 class FixedUpdateInGamePatch
 {
-    public static List<PlayerControl> ScheduledKicks = new();
     private static Dictionary<byte, string> LastColors = new();
     private static float t;
     private static GameObject settingsLabel;
@@ -103,13 +102,10 @@ class FixedUpdateInGamePatch
                 break;
         }
 
-        if (__instance.CanMove && __instance.Data.PlayerLevel + 1 < Options.KickLowLevelPlayer.GetInt() && __instance.Data.ClientId != AmongUsClient.Instance.HostId)
+        if (__instance.Data.PlayerLevel != 0 && __instance.Data.PlayerLevel < Options.KickLowLevelPlayer.GetInt() - 1 && __instance.Data.ClientId != AmongUsClient.Instance.HostId)
         {
-            if (ScheduledKicks.Contains(__instance)) return;
-
             if (!Options.TempBanLowLevelPlayer.GetBool()) 
             {
-                ScheduledKicks.Add(__instance);
                 AmongUsClient.Instance.KickPlayer(__instance.Data.ClientId, false);
                 Logger.Info($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}", "KickLowLevelPlayer");
                 Logger.SendInGame($" {__instance.Data.PlayerName} was kicked for being under level {Options.KickLowLevelPlayer.GetInt()}");

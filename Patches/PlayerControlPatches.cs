@@ -62,7 +62,7 @@ internal static class MurderPlayerPatch
                 {
                     if (p.Data.Role.IsImpostor)
                     {
-                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=red><size=90%>({killCount[__instance.Data.PlayerId]}†)";
+                        p.cosmetics.nameText.text = $"{p.Data.PlayerName}<color=red><size=90%>({killCount[p.Data.PlayerId]}†)";
                     }
                     else
                     {
@@ -106,8 +106,8 @@ internal static class MurderPlayerPatch
                 if (misfireCount[__instance.Data.PlayerId] >= Options.MisfiresToSuicide.GetFloat())
                 {
                     __instance.RpcSetRole(RoleTypes.ImpostorGhost);
-                    Logger.Info($" {__instance.Data.PlayerName} misfired {misfireCount[playerId]} times and suicided", "SNSKillManager");
-                    Logger.SendInGame($" {__instance.Data.PlayerName} misfired {misfireCount[playerId]} times and suicided");
+                    Logger.Info($" {__instance.Data.PlayerName} misfired {misfireCount[playerId]} time(s) and suicided", "SNSKillManager");
+                    Logger.SendInGame($" {__instance.Data.PlayerName} misfired {misfireCount[playerId]} time(s) and suicided");
                 }
 
             }
