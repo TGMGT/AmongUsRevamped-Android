@@ -23,5 +23,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AmongUsRevamped-Fixed
-          path: bin/Release/**/*.dll
+          path: bin/Android/**/*.dll
 
