@@ -14,7 +14,7 @@ jobs:
           dotnet-version: '8.0.x' # Adjust if the mod uses a different version
 
       - name: Restore Dependencies
-        run: dotnet restore
+        run: dotnet restore --configuration Android
 
       - name: Build DLL
         run: dotnet build --configuration Android
