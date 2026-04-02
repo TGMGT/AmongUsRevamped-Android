@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
+using UnityEngine;
 
 namespace AmongUsRevamped;
 
@@ -15,8 +16,7 @@ public static class Translator
 
     private static readonly Dictionary<SupportedLangs, Dictionary<string, string>> _languages = new();
     private static SupportedLangs _currentLang = SupportedLangs.English;
-    private static string LanguageFolder => $"{BanManager.DataPath}/Language";
-
+    private static string LanguageFolder => $"{Application.persistentDataPath}/Language";
     public static void Init()
     {
         CheckLanguageFile(_currentLang);
